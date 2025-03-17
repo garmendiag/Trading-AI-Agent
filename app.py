@@ -1,4 +1,3 @@
-# requirements.txt
 import os
 import sys
 import subprocess
@@ -59,6 +58,7 @@ if st.button("Execute Trade"):
     time.sleep(2)
     st.experimental_rerun()
     
+# requirements.txt
 streamlit
 pandas
 numpy
