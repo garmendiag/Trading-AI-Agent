@@ -9,6 +9,18 @@ nltk
 scikit-learn
 requests
 
+def ensure_packages():
+    import subprocess
+    import sys
+    required_packages = ["streamlit", "pandas", "numpy", "matplotlib", "seaborn", "yfinance", "nltk", "scikit-learn", "requests"]
+    for package in required_packages:
+        try:
+            __import__(package)
+        except ImportError:
+            subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+
+ensure_packages()
+
 # app.py
 import streamlit as st
 import pandas as pd
