@@ -1,4 +1,64 @@
 # requirements.txt
+import os
+import sys
+import subprocess
+
+# Define and run this function at the top to ensure all packages are installed
+def ensure_packages():
+    required_packages = ["streamlit", "pandas", "numpy", "matplotlib", "seaborn", "yfinance", "nltk", "scikit-learn", "requests"]
+    for package in required_packages:
+        try:
+            __import__(package)
+        except ImportError:
+            subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+
+# Call this before any imports that rely on these packages
+ensure_packages()
+
+# Now proceed with your imports
+import streamlit as st
+import pandas as pd
+import matplotlib.pyplot as plt
+import time
+
+# Ensure proper module loading
+sys.path.append(".")
+
+from data_collection.market_index import get_market_data
+from signal_generation.signal_manager import generate_signals
+from sentiment_analysis.news_sentiment import analyze_news
+from trading.trade_execution import execute_trade
+from utils.logger import setup_logger
+
+# Rest of your original code remains unchanged
+st.set_page_config(page_title="Trading AI Agent - Market Analysis", layout="wide")
+st.title("Trading AI Agent")
+
+logger = setup_logger()
+
+# Fetch Market Data
+market_data = get_market_data()
+st.subheader("Market Index Data")
+st.dataframe(market_data)
+
+# Generate Trading Signals
+signals = generate_signals(market_data)
+st.subheader("Trading Signals")
+st.dataframe(signals)
+
+# Sentiment Analysis
+sentiment = analyze_news()
+st.subheader("News Sentiment Analysis")
+st.write(sentiment)
+
+# Trade Execution Simulation
+st.subheader("Trade Execution")
+if st.button("Execute Trade"):
+    execute_trade(signals)
+    st.success("Trade Executed Successfully!")
+    time.sleep(2)
+    st.experimental_rerun()
+    
 streamlit
 pandas
 numpy
