@@ -2,25 +2,29 @@ import os
 import sys
 import subprocess
 
-# Define and run this function at the top to ensure all packages are installed
 def ensure_packages():
     required_packages = ["streamlit", "pandas", "numpy", "matplotlib", "seaborn", "yfinance", "nltk", "scikit-learn", "requests"]
     for package in required_packages:
         try:
             __import__(package)
+            print(f"{package} is already installed.")
         except ImportError:
-            subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+            print(f"Attempting to install {package}...")
+            try:
+                subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+                print(f"Successfully installed {package}.")
+            except subprocess.CalledProcessError as e:
+                print(f"Failed to install {package}. Error code: {e.returncode}, Command: {e.cmd}")
+                raise  # Re-raise the exception to stop execution and see the error
 
-# Call this before any imports that rely on these packages
+# Call this before any imports
 ensure_packages()
 
-# Now proceed with your imports
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import time
 
-# Ensure proper module loading
 sys.path.append(".")
 
 from data_collection.market_index import get_market_data
