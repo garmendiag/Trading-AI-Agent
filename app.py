@@ -13,6 +13,11 @@ requests
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+import sys
+
+# Ensure proper module loading
+sys.path.append(".")
+
 from data_collection.market_index import get_market_data
 from signal_generation.signal_manager import generate_signals
 from sentiment_analysis.news_sentiment import analyze_news
