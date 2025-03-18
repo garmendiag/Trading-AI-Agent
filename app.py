@@ -882,7 +882,8 @@ with col2:
 with col3:
     st.markdown("<div class='card'>", unsafe_allow_html=True)
     rsi_value = df['RSI'].iloc[-1] if 'RSI' in df.columns else insights['rsi']
-    rsi_color = "green" if rsi_value < 30 else "red" if rsi_value > 70 else "normal"
+    # Fixed delta_color to use only accepted values: 'normal', 'inverse', or 'off'
+    rsi_color = "inverse" if rsi_value < 30 or rsi_value > 70 else "normal"
     st.metric("RSI", f"{rsi_value:.1f}", delta_color=rsi_color)
     st.markdown("</div>", unsafe_allow_html=True)
 
