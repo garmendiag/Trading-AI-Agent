@@ -470,7 +470,7 @@ else:
 
 with col4:
     st.markdown(f"**Latest Signal**")
-    st.markdown(f"<span class='{signal_class}'>{signal_<response clipped><NOTE>To save on context only part of this file has been shown to you. You should retry this tool after you have searched inside the file with `grep -n` in order to find the line numbers of what you are looking for.</NOTE>
+    st.markdown(f"<span class='{signal_class}'>{signal_text}<NOTE>To save on context only part of this file has been shown to you. You should retry this tool after you have searched inside the file with `grep -n` in order to find the line numbers of what you are looking for.</NOTE>
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
