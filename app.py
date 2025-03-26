@@ -1,5 +1,4 @@
 # requirements.txt
-pandas
 numpy
 matplotlib
 seaborn
