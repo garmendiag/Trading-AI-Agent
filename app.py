@@ -17,7 +17,6 @@ import datetime
 API_KEY = "87rT4dZbny_pKUAozFAn2SWXsA3pD4q6"
 BASE_URL = "https://api.polygon.io/v2/aggs/ticker"
 
-# Map user-friendly names to actual Polygon tickers (use placeholder contracts for now)
 FUTURES_MAP = {
     "ES": "ESZ2024",
     "NQ": "NQZ2024",
@@ -44,36 +43,12 @@ def fetch_polygon_data(symbol, timespan="minute", limit=50):
     df.rename(columns={"c": "Close"}, inplace=True)
     return df[["Close"]]
 
-# app.py (updated section only)
-import os
-import sys
-import subprocess
-
-# Ensure packages are installed before imports
-
-def ensure_packages():
-    required_packages = ["streamlit", "pandas", "numpy", "matplotlib", "seaborn", "yfinance", "nltk", "scikit-learn", "requests"]
-    for package in required_packages:
-        try:
-            __import__(package)
-        except ImportError:
-            print(f"Installing missing package: {package}")
-            try:
-                subprocess.check_call([sys.executable, "-m", "pip", "install", package])
-            except subprocess.CalledProcessError:
-                print(f"Failed to install {package}. Please install it manually.")
-
-ensure_packages()
-
-try:
-    import streamlit as st
-except ImportError:
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "streamlit"])
-    import streamlit as st
-
+# app.py
+import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import time
+import sys
 
 sys.path.append(".")
 
@@ -108,18 +83,15 @@ for label in selected_symbols:
     except Exception as e:
         st.error(f"Failed to load data for {label}: {e}")
 
-# Signal Summary
 if signals_summary:
     st.subheader("Current Signal Summary")
     for label, sig in signals_summary.items():
         st.markdown(f"**{label}**: {sig}")
 
-# Sentiment Analysis
 sentiment = analyze_news()
 st.subheader("News Sentiment Analysis")
 st.write(sentiment)
 
-# Trade Execution Simulation
 st.subheader("Trade Execution")
 if st.button("Execute Trade"):
     for label in selected_symbols:
