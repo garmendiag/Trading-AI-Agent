@@ -1,10 +1,17 @@
 import streamlit as st
-import pandas as pd
-import matplotlib.pyplot as plt
-import yfinance as yf
-import nltk
-from nltk.sentiment.vader import SentimentIntensityAnalyzer
-import logging
+
+# Try importing required modules with error handling
+try:
+    import pandas as pd
+    import matplotlib.pyplot as plt
+    import yfinance as yf
+    import nltk
+    from nltk.sentiment.vader import SentimentIntensityAnalyzer
+    import logging
+except ImportError as e:
+    st.error(f"Failed to import a required module: {e}")
+    st.write("Please ensure all dependencies are listed in requirements.txt and installed.")
+    st.stop()
 
 # Streamlit configuration
 st.set_page_config(page_title="Trading AI Agent - Market Analysis", layout="wide")
@@ -69,5 +76,5 @@ try:
         execute_trade(signals)
         st.success("Trade Executed Successfully!")
 except Exception as e:
-    st.error(f"Error: {e}")
+    st.error(f"Error in application: {e}")
     logger.error(f"Application error: {e}")
