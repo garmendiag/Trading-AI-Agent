@@ -1,5 +1,4 @@
 # requirements.txt
-streamlit
 pandas
 numpy
 matplotlib
